@@ -11,7 +11,7 @@ import {
   ButtonMore,
 } from './MovieDetails.styled';
 
-import { Link, Outlet, useParams, useLocation } from 'react-router-dom';
+import { Outlet, useParams, useLocation } from 'react-router-dom';
 import { useState, useEffect, Suspense } from 'react';
 import { Loader } from 'components/Loader/Loader';
 

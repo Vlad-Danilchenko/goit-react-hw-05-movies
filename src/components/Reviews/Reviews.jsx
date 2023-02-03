@@ -4,7 +4,6 @@ import { useParams } from 'react-router-dom';
 
 import { useState, useEffect } from 'react';
 import { Loader } from 'components/Loader/Loader';
-import { array } from 'prop-types';
 
 const PERSONAL_KEY = 'd78968a65961b0fbd63bb81018ffc9d2';
 
