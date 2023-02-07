@@ -18,12 +18,7 @@ export const ReviewsItem = styled.li`
 `;
 
 export const ReviewsText = styled.p`
-  /* margin: ; */
-  /* display: block; */
-  /* text-align: center; */
   text-decoration: none;
-
-  /* font-family: 'Poppins'; */
   font-style: normal;
   font-weight: 600;
   font-size: 14px;

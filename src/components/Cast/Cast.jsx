@@ -37,7 +37,7 @@ const Cast = () => {
 
   return (
     <>
-      {castArray && (
+      {castArray && castArray.length > 0 ? (
         <CastList>
           {castArray.map(({ id, character, name, profile_path }) => (
             <CastItem key={id}>
@@ -48,6 +48,8 @@ const Cast = () => {
             </CastItem>
           ))}
         </CastList>
+      ) : (
+        <CastText>'We do not have any cast for this movie'</CastText>
       )}
       {loading && <Loader />}
     </>

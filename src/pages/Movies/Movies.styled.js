@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styled from '@emotion/styled';
 
 export const SearchForm = styled.form`
@@ -101,7 +101,7 @@ export const MovieImg = styled.img`
   object-fit: cover;
 `;
 
-export const MovieLink = styled(NavLink)`
+export const MovieLink = styled(Link)`
   text-decoration: none;
   color: #f7f7f7;
 
