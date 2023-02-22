@@ -25,8 +25,6 @@ const Reviews = () => {
       });
   }, [movieId]);
 
-  console.log(reviewsArray);
-
   return (
     <>
       {reviewsArray && reviewsArray.length > 0 ? (
