@@ -13,9 +13,7 @@ import {
 import { useState, useEffect } from 'react';
 import { useSearchParams, useLocation } from 'react-router-dom';
 import { Loader } from 'components/Loader/Loader';
-
-const BASE_IMG_URL = 'https://image.tmdb.org/t/p/w500';
-const PERSONAL_KEY = 'd78968a65961b0fbd63bb81018ffc9d2';
+import { getQueryMovies, BASE_IMG_URL } from 'services';
 
 const Movies = () => {
   const [loading, setLoading] = useState(false);
@@ -23,7 +21,6 @@ const Movies = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get('query');
-  // console.log(query);
   const location = useLocation();
 
   const handleSearchQueryChange = e => {
@@ -38,7 +35,6 @@ const Movies = () => {
     }
     setSearchParams({ query: searchQuery });
     setSearchQuery('');
-    // console.log(query);
   };
 
   useEffect(() => {
@@ -47,22 +43,11 @@ const Movies = () => {
     }
     setQueryMovies([]);
     setLoading(true);
-    fetch(
-      `https://api.themoviedb.org/3/search/movie?api_key=${PERSONAL_KEY}&query=${query}&language=en-US&page=1&include_adult=false`
-    )
-      .then(res => {
-        return res.json();
-      })
+    getQueryMovies(query)
       .then(promis => {
         const moviesArray = promis.results.map(
           ({ id, title, name, poster_path }) => {
-            let movieTitle = '';
-            if (title) {
-              movieTitle = title;
-            }
-            if (name) {
-              movieTitle = name;
-            }
+            let movieTitle = title || name;
             return { id, movieTitle, poster_path };
           }
         );

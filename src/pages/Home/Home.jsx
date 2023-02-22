@@ -9,9 +9,7 @@ import {
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Loader } from 'components/Loader/Loader';
-
-const BASE_IMG_URL = 'https://image.tmdb.org/t/p/w500';
-const PERSONAL_KEY = 'd78968a65961b0fbd63bb81018ffc9d2';
+import { getTrendingMovies, BASE_IMG_URL } from 'services';
 
 const Home = () => {
   const [loading, setLoading] = useState(false);
@@ -20,27 +18,14 @@ const Home = () => {
 
   useEffect(() => {
     setLoading(true);
-    fetch(
-      `https://api.themoviedb.org/3/trending/all/day?api_key=${PERSONAL_KEY}`
-    )
-      .then(res => {
-        return res.json();
-      })
+    getTrendingMovies()
       .then(promis => {
-        // console.log(promis);
         const moviesArray = promis.results.map(
           ({ id, title, name, poster_path }) => {
-            let movieTitle = '';
-            if (title) {
-              movieTitle = title;
-            }
-            if (name) {
-              movieTitle = name;
-            }
+            const movieTitle = title || name;
             return { id, movieTitle, poster_path };
           }
         );
-        // console.log(moviesArray);
         setTrendingMovies(moviesArray);
       })
       .finally(() => {

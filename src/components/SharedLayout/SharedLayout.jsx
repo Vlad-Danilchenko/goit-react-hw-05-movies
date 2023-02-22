@@ -5,7 +5,6 @@ import { Outlet, useLocation } from 'react-router-dom';
 
 export const SharedLayout = () => {
   const location = useLocation();
-  // console.log(location);
   let activHome = {};
   let activMovies = {};
   if (location.pathname === '/') {

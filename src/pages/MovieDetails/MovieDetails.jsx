@@ -14,21 +14,18 @@ import {
 import { Outlet, useParams, useLocation } from 'react-router-dom';
 import { useState, useEffect, Suspense } from 'react';
 import { Loader } from 'components/Loader/Loader';
-
-const BASE_IMG_URL = 'https://image.tmdb.org/t/p/w500';
-const PERSONAL_KEY = 'd78968a65961b0fbd63bb81018ffc9d2';
+import { getMovieDetails, BASE_IMG_URL } from 'services';
 
 const MovieDetails = () => {
   const [loading, setLoading] = useState(false);
   const { movieId } = useParams();
   const [movie, setMovie] = useState({});
-  // console.log(movie);
 
   const location = useLocation();
-  // console.log(location.state?.from);
+
   const backLinkHref = location.state?.from ?? '/';
   const backLink = { from: location.state?.from } ?? '/';
-  // console.log(backLinkHref);
+
   let activCase = {};
   let activReviews = {};
 
@@ -46,16 +43,9 @@ const MovieDetails = () => {
   }
 
   useEffect(() => {
-    // console.log(movieId);
     setLoading(true);
-    fetch(
-      `https://api.themoviedb.org/3/movie/${movieId}?api_key=${PERSONAL_KEY}&language=en-US`
-    )
-      .then(res => {
-        return res.json();
-      })
+    getMovieDetails(movieId)
       .then(promis => {
-        // console.log(promis);
         const movieInfo = () => {
           const {
             title,
@@ -66,13 +56,7 @@ const MovieDetails = () => {
             poster_path,
             backdrop_path,
           } = promis;
-          let movieTitle = '';
-          if (title) {
-            movieTitle = title;
-          }
-          if (name) {
-            movieTitle = name;
-          }
+          let movieTitle = title || name;
           return {
             poster_path,
             movieTitle,
@@ -83,7 +67,6 @@ const MovieDetails = () => {
           };
         };
         setMovie(movieInfo());
-        // console.log(movieInfo());
       })
       .finally(() => {
         setLoading(false);
@@ -97,7 +80,7 @@ const MovieDetails = () => {
     vote_average,
     backdrop_path,
   } = movie;
-  console.log(vote_average);
+
   const BGImg = {
     backgroundImage: `linear-gradient(to right,
                       rgba(47, 48, 58, 0.4),

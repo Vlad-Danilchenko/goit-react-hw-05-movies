@@ -4,8 +4,7 @@ import { useParams } from 'react-router-dom';
 
 import { useState, useEffect } from 'react';
 import { Loader } from 'components/Loader/Loader';
-
-const PERSONAL_KEY = 'd78968a65961b0fbd63bb81018ffc9d2';
+import { getReviews } from 'services';
 
 const Reviews = () => {
   const [reviewsArray, setReviewsArray] = useState([]);
@@ -14,14 +13,8 @@ const Reviews = () => {
 
   useEffect(() => {
     setLoading(true);
-    fetch(
-      `https://api.themoviedb.org/3/movie/${movieId}/reviews?api_key=${PERSONAL_KEY}&language=en-US&page=1`
-    )
-      .then(res => {
-        return res.json();
-      })
+    getReviews(movieId)
       .then(promis => {
-        // console.log(promis.results);
         const array = promis.results.map(({ id, author, content }) => {
           return { id, author, content };
         });
